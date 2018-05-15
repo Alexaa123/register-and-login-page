@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_664657_3ykdwk90eteghkt9.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font: 14px/1.5 arial;
+            box-sizing: border-box;
+            
+        }
+        a{
+            text-decoration: none;
+            color:#444
+        }
+        html,body,.page{
+            width: 100%;
+            height:100%
+        }
+        .page{
+            background:linear-gradient(to left top,rgba(38,50,105,0.78),rgba(255,152,0,0.45)), url(http://book.jirengu.com/fe/code/projects/HungoouRadio/imgs/bg.jpg) center center no-repeat;
+            background-size: cover
+        }
+        .top{
+            position: relative;
+        }
+        .icon-user1 {
+            font-size: 25px;
+            position: absolute;
+            right: 0;
+            padding: 10px;
+        }
+      
+        .model-login, .model-register{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 400px;
+        }
+
+        .model {
+            padding: 20px;           
+            background: white;
+        }
+        .icon-close {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            padding: 5px;
+            
+        }
+        .tabs {
+            text-align:center;
+            padding: 10px;
+       }
+       .input-field {
+           text-align: center;
+           position:relative;
+           padding: 10px;
+       }
+       input{
+           padding-left: 20px;
+       }
+       .input-field input[type='submit'] {
+           padding: 6px 10px;
+          
+       }
+
+       .icon-users, .icon-suo {
+           position: absolute;
+           top: 10px;
+           left: 86px;
+
+       }
+       .model-flipping.login .model-login,
+       .model-flipping.register .model-register{
+           transform: translate(-50%,-50%) rotateY(0deg);
+           backface-visibility: hidden;
+           transition: all 1s
+       }
+       .model-flipping.login .model-register,
+       .model-flipping.register .model-login{
+           transform: translate(-50%,-50%) rotateY(180deg);
+           backface-visibility: hidden;
+           transition: all 1s
+       }
+       .model-flipping {
+           display: none
+       }
+
+
+
+    
+    
+    
+    
+    </style>
+</head>
+<body>
+    <div class = 'page'>
+    <div class = 'top'>
+        <a href="#" class = 'iconfont icon-user1'></a>
+    </div>
+    <div class = 'main'>
+        <div class = 'model-flipping'>
+            <div class = 'model model-login'>
+                <a href="#" class ='close iconfont icon-close'> </a>
+                <div class= 'tabs'>
+                    <a class='login' href="#">登录</a>
+                    <a class='register' href="#">注册</a>
+                </div>
+                <div class='errormsg'></div>
+                <form action="/login" method = 'post'>
+                <div class = 'input-field'>
+                    <a href="#" class ='iconfont icon-users' ></a>
+                    <input type="text" name='username' placeholder="输入用户名">
+                </div>
+                <div class = 'input-field'>
+                        <a href="#" class ='iconfont icon-suo' ></a>
+                        <input type="text" name='password' placeholder="输入密码">
+                </div>
+                <div class = 'input-field'>
+                        <a href="#" class ='iconfont icon-suo' ></a>
+                        <input type="text" name='password2' placeholder="再次输入密码">
+                </div>
+                <div class = 'input-field'>
+                        <input type="submit" value='登录'>
+                </div>
+                
+                </form>
+            </div>
+            <div class = 'model model-register'>
+                    <a href="#" class ='close iconfont icon-close'> </a>
+                    <div class= 'tabs'>
+                        <a class='login' href="#">登录</a>
+                        <a class='register' href="#">注册</a>
+                    </div>
+                    <div class='errormsg'></div>
+                    <form action="/register" method = 'post'>
+                    <div class = 'input-field'>
+                        <a href="#" class ='iconfont icon-users' ></a>
+                        <input type="text" name='username' placeholder="用户名">
+                    </div>
+                    <div class = 'input-field'>
+                            <a href="#" class ='iconfont icon-suo' ></a>
+                            <input type="text" name='password' placeholder="密码">
+                    </div>
+                    <div class = 'input-field'>
+                        <input type="submit" value='登录'>
+                    </div>
+                    
+                    </form>
+
+            </div>
+        </div>
+    </div>
+    </div>  
+    <script>
+
+        function $(selector){
+            return document.querySelector(selector)
+        }
+        function $$(selector){
+            return document.querySelectorAll(selector)
+        }
+        $('.top .icon-user1').onclick = function(e){
+            e.stopPropagation()
+        $('.model-flipping').style.display = 'block'
+    }
+
+
+        $('.model-flipping').addEventListener('click',function(e){
+            e.stopPropagation()
+            if(e.target.classList.contains('login')){
+                $('.model-flipping').classList.remove('register')
+                $('.model-flipping').classList.add('login')
+            }
+            if(e.target.classList.contains('register')){
+                $('.model-flipping').classList.remove('login')
+                $('.model-flipping').classList.add('register')
+        }
+        console.log(e.target)
+        console.log(this)
+        window.target = e.target
+        if (e.target.classList.contains('close')){
+            $('.model-flipping').style.display='none'
+        }   })
+        document.addEventListener('click',function(){
+            $('.model-flipping').style.display='none'
+        })
+        $('.model-login form').addEventListener('submit',function(e){
+            e.preventDefault()
+            if (!/^\w{3,8}$/.test($('.model-login input[name=username]').value)){
+                $('.model-login .errormsg').innerText = '用户名称需要输入3-8个字符，包括字母和下划线'
+                return false
+            }
+            if (!/^\w{6,10}$/.test($('.model-login input[name=password]').value)){
+                $('.model-login .errormsg').innerText = '用户名称需要输入6-10个字符，包括字母和下划线'
+                return false}
+                this.submit()
+        })
+        
+        $('.model-register form').addEventListener('submit',function(e){
+            e.preventDefault()
+            if (!/^\w{3,8}$/.test($('.model-register input[name=username]').value)){
+                $('.model-register .errormsg').innerText = '用户名需要输入3-8个字符，包扩字母和下划线'
+                return false
+            }
+            if (/^zoushibo$|^ruoyu$/.test($('.model-register input[name=username]').value)){
+                $('.model-register .errormsg').innerText = '用户名已存在'
+            }
+            if (!/^\w{6,10}$/.test($('.model-register input[name=password]').value)){
+                $('model-register .errormsg').innerTest = '密码需要输入6-10个字符，包括字母和下划线'
+                return false
+            }
+            if ($('.model-register input[name=password]').value !== $('.model-register input[name=password2]').value){
+                $('.model-register .errormsg').innerTest = '两次输入的密码不一致'
+                return false
+            }
+            this.submit()
+
+        })
+    
+    
+    
+    
+    </script>    
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
